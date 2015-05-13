@@ -16,8 +16,7 @@ public class ForceHerokuSsl extends HandlerInterceptorAdapter {
 
         System.out.println("proto:" + proto);
 
-        response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-        response.setHeader("Location", "https://altfatterz.com");
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
         return "https".equalsIgnoreCase(proto);
     }
