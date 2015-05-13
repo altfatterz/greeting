@@ -10,14 +10,18 @@ public class ForceHerokuSsl extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        System.out.println("preHandle was called");
-
         String proto = request.getHeader("x-forwarded-proto");
 
-        System.out.println("proto:" + proto);
+        boolean result = false;
 
-        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        if ("https".equalsIgnoreCase(proto)) {
+            String location = "https://" + request.getRequestURI().substring("http://".length());
+            System.out.println("Location:" + location);
+            response.sendRedirect(location);
 
-        return "https".equalsIgnoreCase(proto);
+            result = true;
+        }
+
+        return result;
     }
 }
