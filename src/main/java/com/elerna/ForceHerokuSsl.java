@@ -12,14 +12,14 @@ public class ForceHerokuSsl extends HandlerInterceptorAdapter {
 
         String proto = request.getHeader("x-forwarded-proto");
 
-        boolean result = false;
+        boolean result = true;
 
-        if ("https".equalsIgnoreCase(proto)) {
+        if ("http".equalsIgnoreCase(proto)) {
             String location = "https://" + request.getRequestURI().substring("http://".length());
             System.out.println("Location:" + location);
             response.sendRedirect(location);
 
-            result = true;
+            result = false;
         }
 
         return result;
