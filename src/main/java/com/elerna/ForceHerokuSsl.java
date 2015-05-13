@@ -3,6 +3,7 @@ package com.elerna;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class ForceHerokuSsl extends HandlerInterceptorAdapter {
@@ -24,9 +25,15 @@ public class ForceHerokuSsl extends HandlerInterceptorAdapter {
             System.out.println("Servlet path:" + request.getServletPath());
             System.out.println("Query string:" + request.getQueryString());
 
-            String location = "https://" + request.getRequestURL().substring("http://".length());
+            StringBuilder location = new StringBuilder();
+            location.append("https://");
+            location.append(request.getRequestURL().substring("http://".length()));
+            if (!StringUtils.isEmpty(request.getQueryString())) {
+                location.append("?").append(request.getQueryString());
+            }
+
             System.out.println("Location:" + location);
-            response.sendRedirect(location);
+            response.sendRedirect(location.toString());
 
             result = false;
         }
