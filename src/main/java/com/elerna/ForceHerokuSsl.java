@@ -20,7 +20,7 @@ public class ForceHerokuSsl extends HandlerInterceptorAdapter {
             System.out.println("URI:" + request.getRequestURI());
             System.out.println("PathInfo: " + request.getPathInfo());
 
-            String location = "https://" + request.getRequestURI().substring("http://".length());
+            String location = "https://" + request.getRequestURL().substring("http://".length());
             System.out.println("Location:" + location);
             response.sendRedirect(location);
 
