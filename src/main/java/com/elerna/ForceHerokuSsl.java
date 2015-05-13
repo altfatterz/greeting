@@ -15,6 +15,10 @@ public class ForceHerokuSsl extends HandlerInterceptorAdapter {
         boolean result = true;
 
         if ("http".equalsIgnoreCase(proto)) {
+
+            System.out.println("URL:" + request.getRequestURL());
+            System.out.println("URI:" + request.getRequestURI());
+
             String location = "https://" + request.getRequestURI().substring("http://".length());
             System.out.println("Location:" + location);
             response.sendRedirect(location);
