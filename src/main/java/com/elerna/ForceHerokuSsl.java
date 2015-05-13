@@ -33,7 +33,13 @@ public class ForceHerokuSsl extends HandlerInterceptorAdapter {
             }
 
             System.out.println("Location:" + location);
-            response.sendRedirect(location.toString());
+
+            // using a 301 (permanent redirect)
+            response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+            response.setHeader("Location", location.toString());
+
+            // Makes a 302 (temporary redirect)
+            //response.sendRedirect(location.toString());
 
             result = false;
         }
